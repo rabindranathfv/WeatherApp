@@ -1,6 +1,6 @@
 const argv = require('./config/yargs').argv;
 const axios = require('axios');
-
+const weatherAPI = require('./weather/weather');
 
 const getInfoCity = async(address) => {
     // encodeUri add special character for safety use with nodejs
@@ -24,13 +24,18 @@ const getInfoCity = async(address) => {
     const longitude = data[0].lon;
 
     return {
-        address,
-        cityName,
-        latitude,
-        longitude
+        'address': address,
+        'cityName': cityName,
+        'latitude': latitude,
+        'longitude': longitude
     }
-
-
 }
 
-console.log(getInfoCity(argv.address));
+/* const infoCity = getInfoCity(argv.address)
+    .then((resp) => {
+        console.log(resp);
+    }); */
+
+const latLonCity = weatherAPI.getWeather(40.419998, -3.700000)
+    .then(resp => console.log(resp))
+    .catch(err => console.log(err));
