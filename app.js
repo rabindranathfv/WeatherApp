@@ -31,11 +31,19 @@ const getInfoCity = async(address) => {
     }
 }
 
-/* const infoCity = getInfoCity(argv.address)
-    .then((resp) => {
-        console.log(resp);
-    }); */
+const cityWeather = (address) => {
+    let cityName, temp;
+    const infoCity = getInfoCity(address)
+        .then(resp => {
+            cityName = resp.cityName;
+        });
 
-const latLonCity = weatherAPI.getWeather(40.419998, -3.700000)
-    .then(resp => console.log(resp))
-    .catch(err => console.log(err));
+    const latLonCity = weatherAPI.getWeather(infoCity.latitude, infoCity.longitude)
+        .then(resp => {
+            temp = resp;
+            console.log(`the temperature of ${cityName} is ${temp}`);
+        })
+        .catch(err => console.log(err));
+}
+
+cityWeather(argv.address);
