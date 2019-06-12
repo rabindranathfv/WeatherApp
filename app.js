@@ -46,4 +46,20 @@ const cityWeather = (address) => {
         .catch(err => console.log(err));
 }
 
-cityWeather(argv.address);
+const cityWeatherES6 = async(address) => {
+
+    try {
+        let city = await getInfoCity(address);
+        let temp = await weatherAPI.getWeather(city.latitude, city.longitude);
+        /* console.log(`ES6 **** the temperature of ${city.cityName} is ${temp}`); */
+        return `ES6 **** the temperature of ${city.cityName} is ${temp}`;
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
+
+/* cityWeather(argv.address); */
+cityWeatherES6(argv.address)
+    .then(resp => console.log(resp));
